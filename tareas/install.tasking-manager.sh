@@ -38,13 +38,10 @@ sudo usermod -aG docker $USER
 
 ####################################################
 #
-# Seguir las instrucciones de configuración:
+# SIGUIENTES PASOS:
 #
-# https://github.com/hotosm/tasking-manager/blob/develop/docs/setup-docker.md#configure
-#
-# Y por último, levantar las máquinas desde la carpeta tasking-manager
-#
-# make up
+# 1. Seguir las instrucciones de configuración: https://github.com/hotosm/tasking-manager/blob/develop/docs/setup-docker.md#configure
+# 2. Levantar las máquinas desde la carpeta tasking-manager: make up
+# 3. (Opcional) Cargar un dump de la base de datos: zcat tasking-manager.sql.gz | docker exec -i postgresql psql -U tm -d tasking-manager
 #
 ####################################################
-
