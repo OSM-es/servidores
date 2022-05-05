@@ -48,28 +48,3 @@ sudo usermod -aG docker $USER
 #
 ####################################################
 
-# Crear script de arranque. Ojo, hay que cambiar "tm" por el nombre de usuario en las rutas
-echo '#!/bin/bash
-cd /home/tm/tasking-manager
-make up' > /home/tm/arranca-tm.sh
-chmod +x /home/tm/arranca-tm.sh
-
-# Crear servicio tm. Ojo, hay que cambiar "tm" por el nombre de usuario en "User" y en la ruta en "ExecStart"
-echo '[Unit]
-Description=tm
-After=network.target 
-
-[Service]
-Type=simple
-User=tm
-Restart=always
-ExecStart=/home/tm/arranca-tm.sh
-
-[Install]
-WantedBy=multi-user.target
-' > /etc/systemd/system/tm.service
-
-# Activar e iniciar servicio
-systemctl daemon-reload
-systemctl enable tm
-service tm start
