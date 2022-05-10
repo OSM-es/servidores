@@ -6,15 +6,18 @@ sudo apt-get update
 
 # Instalar software necesario
 sudo apt-get install
-	git \
-	make \
-	ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+  git \
+  make \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release
 
 # Clonar el tasking-manager
 git clone https://github.com/hotosm/tasking-manager.git
+
+# Usar la versión cuyo tag sea más actual, que será más estable que usar la rama por defecto de desarrollo
+git checkout $(git describe --tags)
 
 # Instalar docker
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -29,8 +32,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 sudo curl \
-    -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
-    -o /etc/bash_completion.d/docker-compose
+  -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
+  -o /etc/bash_completion.d/docker-compose
 
 # Post-instalación: https://docs.docker.com/engine/install/linux-postinstall/
 sudo groupadd docker
