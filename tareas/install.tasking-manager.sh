@@ -103,5 +103,12 @@ sudo -u $USUARIOTM docker exec -i postgresql createdb -U tm tasking-manager
 zcat /home/$USUARIOTM/tasking-manager.sql.gz | sudo -u $USUARIOTM docker exec -i postgresql psql -U tm -d tasking-manager
 sudo -u $USUARIOTM make up
 
+# Script para hacer copias de seguridad de la base de datos.
+sudo apt-get install -y cron coreutils
+sudo -u $USUARIOTM curl -L "https://raw.githubusercontent.com/OSM-es/servidores/master/tareas/database-backup.sh" -o /home/$USUARIOTM/database-backup.sh
+sudo -u $USUARIOTM chmod +x /home/$USUARIOTM/database-backup.sh
+# Corre todos los días a las 2:45AM
+echo "45 2 * * * $USUARIOTM SHELL=/bin/bash /home/$USUARIOTM/database-backup.sh" | sudo tee /etc/cron.d/database-backup
+
 echo "Todo OK, la instancia debería estar accesible aquí: https://$DOMINIO"
 exit 0
