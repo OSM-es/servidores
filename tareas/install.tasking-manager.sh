@@ -42,7 +42,7 @@ CRYPT=$(perl -e 'print crypt($ARGV[0], "password")' $PASS)
 sudo useradd -m -p "$CRYPT" "$USUARIOTM"
 
 # Instalar software necesario
-sudo apt-get install -y git make ca-certificates curl gnupg lsb-release
+sudo apt-get install -y git make ca-certificates curl gnupg lsb-release rsync
 
 # Clonar el tasking-manager
 cd /home/$USUARIOTM
