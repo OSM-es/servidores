@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  overpass:
+    build:
+      context: .
+    container_name: overpass
+    ports:
+      - 8000:80
+    volumes:
+      - /var/local/overpass/db:/db
+      - ./oauth-settings.json:/secrets/oauth-settings.json
+    environment:
+      - OVERPASS_META=yes
+      - OVERPASS_MODE=init
+      - OVERPASS_PLANET_URL_ESP=https://osm-internal.download.geofabrik.de/europe/spain-latest-internal.osm.pbf
+      - OVERPASS_PLANET_URL_CAN=https://osm-internal.download.geofabrik.de/africa/canary-islands-latest-internal.osm.pbf
+      - OVERPASS_DIFF_URL_ESP=http://download.openstreetmap.fr/replication/europe/spain/minute/
+      - OVERPASS_DIFF_URL_CAN=https://download.geofabrik.de/africa/canary-islands-updates/  # daily
+      - OVERPASS_UPDATE_SLEEP=120
+      - OVERPASS_RULES_LOAD=1
+      - OVERPASS_COMPRESSION=gz
+      - OVERPASS_USE_AREAS=true
+      - USE_OAUTH_COOKIE_CLIENT=yes
+      - OVERPASS_STOP_AFTER_INIT=false
+    
+    healthcheck:
+      test: ["CMD-SHELL", "curl -qf 'http://localhost:8000/api/interpreter?data=[out:json];node(21068295);out;' | jq '.generator' |grep -q Overpass || exit 1"]
+      start_period: 48h
