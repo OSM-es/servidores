@@ -3,9 +3,8 @@ services:
   overpass:
     build:
       context: .
-    container_name: overpass
-    ports:
-      - 8000:80
+    expose:
+      - 8000
     volumes:
       - /var/local/overpass/db:/db
       - ./oauth-settings.json:/secrets/oauth-settings.json
@@ -22,7 +21,18 @@ services:
       - OVERPASS_USE_AREAS=true
       - USE_OAUTH_COOKIE_CLIENT=yes
       - OVERPASS_STOP_AFTER_INIT=false
-    
-    healthcheck:
-      test: ["CMD-SHELL", "curl -qf 'http://localhost:8000/api/interpreter?data=[out:json];node(21068295);out;' | jq '.generator' |grep -q Overpass || exit 1"]
-      start_period: 48h
+    labels:
+      - "traefik.http.routers.overpass.rule=Host(`localhost`, `osm3s.cartobase.es`)"
+
+  traefik:
+    image: traefik:v2.7
+    command:
+      - --api.insecure=true
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "80:80"
+      - "8080:8080"
+    depends_on:
+      - overpass
