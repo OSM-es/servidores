@@ -18,8 +18,8 @@ El contenedor se detiene o activa con
 
     docker-compose stop / start
 
-El servicio responde en localhost:8000/api/interpreter. Ejemplo:
+El servicio responde en localhost/api/interpreter. Ejemplo:
 
-    curl "http://localhost:8000/api/interpreter?data=\[out:json\];node(21068295);out;"
+    curl "http://localhost/api/interpreter?data=\[out:json\];node(21068295);out;"
 
 Se actualiza cada 120 segundos

@@ -3,6 +3,7 @@ services:
   overpass:
     build:
       context: .
+    restart: always
     expose:
       - 8000
     volumes:
@@ -26,6 +27,7 @@ services:
 
   traefik:
     image: traefik:v2.7
+    restart: always
     command:
       - --api.insecure=true
       - --providers.docker
