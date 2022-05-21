@@ -49,7 +49,7 @@ cd /home/$USUARIOTM
 sudo -u $USUARIOTM git clone https://github.com/hotosm/tasking-manager.git
 # Usar la versión cuyo tag sea más actual (v4.4.15), más estable que la rama de desarrollo
 cd tasking-manager
-sudo -u $USUARIOTM git checkout $(git describe --tags)
+sudo -u $USUARIOTM git checkout $(git describe --tags --abbrev=0)
 
 # Instalar docker
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
