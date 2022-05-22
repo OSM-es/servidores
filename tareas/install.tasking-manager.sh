@@ -12,7 +12,7 @@ set -e
 # "Secreto de Consumidor:" para configurar TM_CONSUMER_KEY y TM_CONSUMER_SECRET.
 
 #### Configura estas variables ####
-DOMINIO="tareas.cartobase.es"
+DOMINIO="tareas.openstreetmap.es"
 
 # OpenStreetMap OAuth consumer key and secret (required)
 TM_CONSUMER_KEY=XXXXXXXXXXXXXXXXXXXXXXXX
