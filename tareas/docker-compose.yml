@@ -35,6 +35,12 @@ services:
     labels:
       - traefik.http.routers.frontend.rule=Host(`localhost`, `XXXXDOMINIOXXXX`)
       - traefik.http.services.frontend.loadbalancer.server.port=80
+      # meanwhile home is not ready: redirect home page to /explore
+      - traefik.http.routers.frontend.middlewares=home-redirect
+      - traefik.http.middlewares.home-redirect.redirectregex.regex=^https?://XXXXDOMINIOXXXX/?$$
+      - traefik.http.middlewares.home-redirect.redirectregex.replacement=/explore
+
+
 
   postgresql:
     image: mdillon/postgis:11
