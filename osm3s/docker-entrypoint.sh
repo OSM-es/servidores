@@ -10,7 +10,7 @@ OVERPASS_CLONE_SOURCE=${OVERPASS_CLONE_SOURCE:-http://dev.overpass-api.de/api_dr
 OVERPASS_PLANET_URL_ESP=${OVERPASS_PLANET_URL_ESP:-https://osm-internal.download.geofabrik.de/europe/spain-latest-internal.osm.pbf}
 OVERPASS_PLANET_URL_CAN=${OVERPASS_PLANET_URL_CAN:-https://osm-internal.download.geofabrik.de/africa/canary-islands-latest-internal.osm.pbf}
 OVERPASS_DIFF_URL_ESP=${OVERPASS_DIFF_URL_ESP:-http://download.openstreetmap.fr/replication/europe/spain/minute/}
-OVERPASS_DIFF_URL_CAN=${OVERPASS_DIFF_URL_CAN:-https://download.geofabrik.de/africa/canary-islands-updates/}
+OVERPASS_DIFF_URL_CAN=${OVERPASS_DIFF_URL_CAN:-http://download.openstreetmap.fr/replication/africa/spain/canarias/minute/}
 
 # this is used by other processes, so needs to be exported
 export OVERPASS_MAX_TIMEOUT=${OVERPASS_MAX_TIMEOUT:-1000s}

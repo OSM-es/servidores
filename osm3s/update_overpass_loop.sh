@@ -2,7 +2,7 @@
 
 OVERPASS_UPDATE_SLEEP=${OVERPASS_UPDATE_SLEEP:-60}
 OVERPASS_DIFF_URL_ESP=${OVERPASS_DIFF_URL_ESP:-http://download.openstreetmap.fr/replication/europe/spain/minute/}
-OVERPASS_DIFF_URL_CAN=${OVERPASS_DIFF_URL_CAN:-https://download.geofabrik.de/africa/canary-islands-updates/}
+OVERPASS_DIFF_URL_CAN=${OVERPASS_DIFF_URL_CAN:-http://download.openstreetmap.fr/replication/africa/spain/canarias/minute/}
 set +e
 while true; do
     echo "Actualiza península"
