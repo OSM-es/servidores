@@ -47,9 +47,11 @@ sudo apt-get install -y git make ca-certificates curl gnupg lsb-release rsync
 # Clonar el tasking-manager
 cd /home/$USUARIOTM
 sudo -u $USUARIOTM git clone https://github.com/hotosm/tasking-manager.git
-# Usar la versión cuyo tag sea más actual (v4.4.15), más estable que la rama de desarrollo
+# Preguntar al usuario qué versión del TM desea instalar, si no introduce ninguna, se instalar
 cd tasking-manager
-sudo -u $USUARIOTM git checkout $(git describe --tags --abbrev=0)
+read -p "Introduce la versión del TM que corresponda con la backup que tengas, ej. v4.4.4 (no olvides la letra 'v'); si no tienes ninguna, se instalará la versión más moderna ($(git describe --tags --abbrev=0)): " VERSION
+VERSION=${VERSION:-$(git describe --tags --abbrev=0)
+sudo -u $USUARIOTM git checkout "${VERSION}"
 
 # Instalar docker
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
