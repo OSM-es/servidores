@@ -113,4 +113,5 @@ zcat /home/$USUARIOTM/tasking-manager.sql.gz | sudo -u $USUARIOTM docker exec -i
 sudo -u $USUARIOTM make up
 
 echo "Todo OK, la instancia debería estar accesible aquí: https://$DOMINIO"
+echo "RECORDATORIO: configurar el proxy (si hay) para que el tamaño máximo permitido sean 100MB. NGINX: client_max_body_size 100M;"
 exit 0
