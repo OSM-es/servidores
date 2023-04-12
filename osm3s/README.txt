@@ -22,4 +22,8 @@ El servicio responde en localhost/api/interpreter. Ejemplo:
 
     curl "http://localhost/api/interpreter?data=\[out:json\];node(21068295);out;"
 
-Se actualiza cada 120 segundos
+Se actualiza cada 300 segundos
+
+Comprobacion del estado de actualizacion
+
+    curl http://localhost/api/estado

@@ -1,9 +1,17 @@
 #!/bin/sh
-CHANGESLOG=/db/changes.log
-TIMEOUT=86400 # 1 Dia
+REPIDCAN=/db/replicate_id_can
+REPIDESP=/db/replicate_id_esp
+TIMEOUT=3600 # 1 hora
 echo "Content-type:text/html\r\n"
-if [ "$(( $(date +"%s") - $(stat -c "%Y" "$CHANGESLOG") ))" -gt "$TIMEOUT" ]; then
-  stat "$CHANGELOG"
+if [ ! -s "$REPIDESP" ]; then
+  echo "No existe replica peninsula"
+elif [ ! -s "$REPIDCAN" ]; then
+  echo "No existe replica Canarias"
+elif [ "$(( $(date +"%s") - $(stat -c "%Y" "$REPIDESP") ))" -gt "$TIMEOUT" ]; then
+  stat "$REPIDESP"
+elif [ "$(( $(date +"%s") - $(stat -c "%Y" "$REPIDCAN") ))" -gt "$TIMEOUT" ]; then
+  stat "$REPIDCAN"
 else
   echo "Servicio OK"
 fi
+

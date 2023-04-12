@@ -3,9 +3,9 @@ services:
   overpass:
     build:
       context: .
-    container_name: overpass
+    restart: always
     ports:
-      - 8000:80
+      - "80:80"
     volumes:
       - /var/local/overpass/db:/db
       - ./oauth-settings.json:/secrets/oauth-settings.json
@@ -15,14 +15,29 @@ services:
       - OVERPASS_PLANET_URL_ESP=https://osm-internal.download.geofabrik.de/europe/spain-latest-internal.osm.pbf
       - OVERPASS_PLANET_URL_CAN=https://osm-internal.download.geofabrik.de/africa/canary-islands-latest-internal.osm.pbf
       - OVERPASS_DIFF_URL_ESP=http://download.openstreetmap.fr/replication/europe/spain/minute/
-      - OVERPASS_DIFF_URL_CAN=http://download.openstreetmap.fr/replication/africa/spain/canarias/minute/
-      - OVERPASS_UPDATE_SLEEP=120
+      - OVERPASS_DIFF_URL_CAN=https://download.geofabrik.de/africa/canary-islands-updates/  # daily
+      - OVERPASS_UPDATE_SLEEP=300
       - OVERPASS_RULES_LOAD=1
       - OVERPASS_COMPRESSION=gz
       - OVERPASS_USE_AREAS=true
       - USE_OAUTH_COOKIE_CLIENT=yes
       - OVERPASS_STOP_AFTER_INIT=false
-    
+    labels:
+      - "traefik.http.routers.overpass.rule=Host(`localhost`, `osm3s.cartobase.es`)"
     healthcheck:
-      test: ["CMD-SHELL", "curl -qf 'http://localhost:8000/api/interpreter?data=[out:json];node(21068295);out;' | jq '.generator' |grep -q Overpass || exit 1"]
-      start_period: 48h
+      test: ["CMD-SHELL", "curl -qfs 'http://localhost/api/interpreter?data=[out:json];node(21068295);out;' | jq '.generator' | grep -q Overpass || exit 1"]
+      interval: 10s
+      timeout: 2s
+      retries: 10
+      start_period: 8h
+
+  traefik:
+    image: traefik:v2.7
+    restart: always
+    command:
+      - --api.insecure=true
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - overpass
