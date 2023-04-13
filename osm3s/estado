@@ -1,15 +1,21 @@
 #!/bin/sh
 REPIDCAN=/db/replicate_id_can
 REPIDESP=/db/replicate_id_esp
-TIMEOUT=3600 # 1 hora
+REMOTE_SEQN_ESP=$(curl -fs "$OVERPASS_DIFF_URL_ESP/state.txt" | grep sequenceNumber | cut -d"=" -f2)
+REMOTE_SEQN_CAN=$(curl -fs "$OVERPASS_DIFF_URL_CAN/state.txt" | grep sequenceNumber | cut -d"=" -f2)
+MAXDIFF=10
 echo "Content-type:text/html\r\n"
 if [ ! -s "$REPIDESP" ]; then
   echo "No existe replica peninsula"
 elif [ ! -s "$REPIDCAN" ]; then
   echo "No existe replica Canarias"
-elif [ "$(( $(date +"%s") - $(stat -c "%Y" "$REPIDESP") ))" -gt "$TIMEOUT" ]; then
+elif [ $(( $REMOTE_SEQ_ESP - $(cat $REPIDESP) )) -gt $MAXDIFF ]; then
+  echo "$REMOTE_SEQ_ESP"
+  cat "$REPIDESP"
   stat "$REPIDESP"
-elif [ "$(( $(date +"%s") - $(stat -c "%Y" "$REPIDCAN") ))" -gt "$TIMEOUT" ]; then
+elif [ $(( $REMOTE_SEQ_CAN - $(cat $REPIDCAN) )) -gt $MAXDIFF ]; then
+  echo "$REMOTE_SEQ_CAN"
+  cat "$REPIDCAN"
   stat "$REPIDCAN"
 else
   echo "Servicio OK"
