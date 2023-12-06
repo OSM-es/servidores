@@ -5,7 +5,7 @@ set -e
 # adduser tuusuario
 # adduser tuusuario sudo
 
-# Es necesario registrar una nueva aplicación en osm.org para el login:
+# Es necesario registrar una nueva aplicación en osm.org para el login:  20231206: OJO, la última versión del TM usa oauth2. PENDIENTE: actualizar este script
 # https://www.openstreetmap.org/user/un-usuario-osm-para-el-gestor/oauth_clients/new 
 # con los permisos "leer sus preferencias de usuario" y "modificar el mapa". 
 # Una vez registrada tenemos que guardar la "Clave de Consumidor" y 
@@ -63,8 +63,9 @@ sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 # Instalar docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+# No encuentro la configuración para el autocompletado en la v2.23.3, así que nos quedamos con la 1.29.2
 sudo curl \
   -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
   -o /etc/bash_completion.d/docker-compose
@@ -76,7 +77,7 @@ sudo usermod -aG docker $USUARIOTM
 # Configuración del tasking-manager: tasking-manager.env, docker-compose.yml y docker-compose.override.yml.
 cd /home/$USUARIOTM/tasking-manager
 
-# Descarga de las plantillas preconfiguradas
+# Descarga de las plantillas preconfiguradas. 20231206: OJO, la última versión del TM usa oauth2 y hay otros pequeños cambios. Ver example.env
 sudo -u $USUARIOTM  curl -L "https://raw.githubusercontent.com/OSM-es/servidores/master/tareas/tasking-manager.env" -o tasking-manager.env
 sudo -u $USUARIOTM  curl -L "https://raw.githubusercontent.com/OSM-es/servidores/master/tareas/docker-compose.yml" -o docker-compose.yml
 sudo -u $USUARIOTM  curl -L "https://raw.githubusercontent.com/OSM-es/servidores/master/tareas/docker-compose.override.yml" -o docker-compose.override.yml
