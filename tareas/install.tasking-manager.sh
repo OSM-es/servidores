@@ -50,7 +50,7 @@ sudo -u $USUARIOTM git clone https://github.com/hotosm/tasking-manager.git
 # Preguntar al usuario qué versión del TM desea instalar, si no introduce ninguna, se instalar
 cd tasking-manager
 read -p "Introduce la versión del TM que corresponda con la backup que tengas, ej. v4.4.4 (no olvides la letra 'v'); si no tienes ninguna, se instalará la versión más moderna ($(git describe --tags --abbrev=0)): " VERSION
-VERSION=${VERSION:-$(git describe --tags --abbrev=0)
+VERSION=${VERSION:-$(sudo -u $USUARIOTM git describe --tags --abbrev=0)}
 sudo -u $USUARIOTM git checkout "${VERSION}"
 
 # Instalar docker
