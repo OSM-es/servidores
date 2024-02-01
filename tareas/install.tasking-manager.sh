@@ -5,6 +5,9 @@ set -e
 # adduser tuusuario
 # adduser tuusuario sudo
 
+echo "Este script solo vale hasta la versión v4.4.16.1. Ver la documentación para actualizar"
+exit 1
+
 # Es necesario registrar una nueva aplicación en osm.org para el login:  20231206: OJO, la última versión del TM usa oauth2. PENDIENTE: actualizar este script
 # https://www.openstreetmap.org/user/un-usuario-osm-para-el-gestor/oauth_clients/new 
 # con los permisos "leer sus preferencias de usuario" y "modificar el mapa". 
