@@ -30,7 +30,7 @@ if ! mkdir -p "${BACKUP_DIR}"; then
 fi;
 
 set -o pipefail
-if ! docker exec -i postgresql pg_dump -Fp -U "$USERNAME" "${DATABASE}" | gzip > "${BACKUP_DIR}"/"${FILENAME}.sql.gz.in_progress"; then
+if ! docker exec -i postgresql pg_dump --no-owner -Fp -U "$USERNAME" "${DATABASE}" | gzip > "${BACKUP_DIR}"/"${FILENAME}.sql.gz.in_progress"; then
   echo "[!!ERROR!!] Failed to produce plain backup database ${DATABASE}" 1>&2
 else
   mv "${BACKUP_DIR}"/"${FILENAME}.sql.gz.in_progress" "${BACKUP_DIR}"/"${FILENAME}.sql.gz"
