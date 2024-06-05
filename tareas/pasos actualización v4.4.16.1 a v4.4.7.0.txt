@@ -1,0 +1,66 @@
+sudo su - tm
+bash
+./database-backup.sh
+cd tasking-manager
+make down
+git fetch --tags
+# git stash
+cp docker-compose.yml docker-compose.yml.old
+cp docker-compose.override.yml docker-compose.override.yml.old
+cp tasking-manager.env tasking-manager.env.old
+# git rm -f docker-compose.override.yml
+# git rm -f docker-compose.yml
+git stash
+#git checkout tags/v4.7.3 # No funcionó
+git checkout tags/v4.7.0
+
+docker-compose build --no-cache # 8 minutos
+
+
+cp example.env tasking-manager.env
+
+# añadir dominio tareas.cartobase.es,  redirección a /explore, nuevo directorio para postgresql-data y external: true
+# Ver archivos .old, comparar y rellenar campos
+# POSTGRES_ENDPOINT=postgresql
+# comprobar que todas las URLs sean "https" no "http"
+# Cambiar el host de localhost -> postgresql en tasking-manager.env en la sección del postgresql
+nano tasking-manager.env
+nano docker-compose.yml
+nano docker-compose.override.yml
+
+# Crear OAuth2 para pre
+Client ID	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Client Secret	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Redirect URIs	
+https://tareas.cartobase.es/authorized
+
+# OAuth2 para producción
+Client ID	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Client Secret	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Redirect URIs	
+https://tareas.openstreetmap.es/authorized
+
+docker-compose build # 2 min
+
+# eliminar volumen base de datos
+docker volume remove tasking-manager_postgresql-data
+
+docker-compose up -d postgresql
+# cargar último backup
+zcat ../backups/2024ultimobackup-024501.tasking-manager-v4.4.16.1.sql.gz | docker exec -i postgresql psql -U tm -d tasking-manager
+
+# debug
+# docker exec -it postgresql psql -U tm -d tasking-manager -c "select * from alembic_version"
+
+
+
+docker-compose up migration
+
+# debería de haber proyectos!
+# docker exec -it postgresql psql -U tm -d tasking-manager -c "select COUNT(*) from projects"
+
+#docker network rm tm-web
+#docker network create tm-web
+make down
+make up
