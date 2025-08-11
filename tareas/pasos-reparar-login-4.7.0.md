@@ -52,7 +52,7 @@ make down
 make up
 ```
 
-## Apply Cherry-pick
+## Apply Cherry-pick Nr 1 for Login
 ```
 git checkout osm-es-4.7.0-login-fix  
 git cherry-pick 926a952165383e927078a20e92d61ac41f2826a7  
@@ -79,11 +79,82 @@ git cherry-pick --continue
 git push
 
 # On server
-
 cd /home/tm/tasking-manager  
 git fetch  
 git checkout osm-es-4.7.0-login-fix  
+git pull
 docker-compose build --no-cache frontend  
 make down  
 make up  
+
+# Testing, login ok (fix 'contributions/' fail in other issue+PR)
+# August 10, 2025: Merge PR https://github.com/OSM-es/tasking-manager/pull/1
+# Run server again from default branch osm-es-4.7.0: 
+
+# On server
+cd /home/tm/tasking-manager  
+git fetch  
+git checkout osm-es-4.7.0 
+git pull
+make down  
+# Rebuild  
+docker-compose build --no-cache
+make up
+# all ok, server running from osm-es-4.7.0 branch
+```
+
+## Apply Cherry-pick Nr 2 for /contributions page failure
+This fails: https://tareas.openstreetmap.es/contributions
+
+See issue 3: https://github.com/OSM-es/tasking-manager/issues/3
+Create new branch `osm-es-4.7.0-issue3`. 
+Cherry pick from https://github.com/hotosm/tasking-manager/commit/56da86bf3076e48fa0c0afc0a44b6ab08a079c83
+
+```
+# Selección de cerezas
+git fetch
+git checkout osm-es-4.7.0-issue3 
+git cherry-pick 56da86bf3076e48fa0c0afc0a44b6ab08a079c83  
+Auto-merging frontend/src/api/stats.js
+CONFLICT (content): Merge conflict in frontend/src/api/stats.js
+Auto-merging frontend/src/network/genericJSONRequest.js
+CONFLICT (content): Merge conflict in frontend/src/network/genericJSONRequest.js
+Auto-merging frontend/src/views/userDetail.js
+error: could not apply 56da86bf3... Cancel call to ohsome when a component is unloaded
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+
+# resolve conflicts  
+git add frontend/src/api/stats.js frontend/src/network/genericJSONRequest.js frontend/src/views/userDetail.js
+git cherry-pick --continue
+git push
+
+# On server
+cd /home/tm/tasking-manager  
+git fetch  
+git checkout osm-es-4.7.0-issue3  
+git pull
+make down  
+docker-compose build --no-cache frontend  
+make up  
+
+# TODO LATER
+# Testing, check https://tareas.openstreetmap.es/contributions ok now.
+# August 10, 2025: Merge PR https://github.com/OSM-es/tasking-manager/pull/4
+# Run server again from default branch osm-es-4.7.0: 
+
+# On server
+cd /home/tm/tasking-manager  
+git fetch  
+git checkout osm-es-4.7.0 
+git pull
+make down  
+# Rebuild  
+docker-compose build --no-cache
+make up
+# all ok, server running from osm-es-4.7.0 branch
 ```
