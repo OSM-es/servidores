@@ -7,6 +7,11 @@ Consta de dos servicios independientes:
 
 Son repositorios git, en la carpeta correspondiente, se actualizan con
 
+    /opt/CatAtomAPI
+    # CatAtom2OSM.git es un "submodule"
+    git pull --recurse-submodules
+    
+    cd /opt/CatAtomWeb
     git pull
 
 Para tener permisos de escritura, el usuario debe pertenecer al grupo 'git'.
