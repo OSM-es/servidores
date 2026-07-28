@@ -1,10 +1,9 @@
-  GNU nano 6.2                                               Nuevo búfer *                                                      
-=CatAtom2OSM online=
+**CatAtom2OSM Online**
 
 Consta de dos servicios independientes:
 
-/opt/CatAtomAPI
-/opt/CatAtomWeb
+    /opt/CatAtomAPI
+    /opt/CatAtomWeb
 
 Son repositorios git, en la carpeta correspondiente, se actualizan con
 
