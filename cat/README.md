@@ -39,7 +39,7 @@ Para consultar los registros
 ### Proyecto bloqueado
 
 A veces, el procesamiento de un municipio puede fallar y quedarse en estado de _ejecutando_, sin terminar nunca. No es posible borrarlo o pararlo desde la interfaz web (https://catastro.openstreetmap.es).
-Para poderlo solucionar es precisa entrar al servidor y con estos pasos se puede reparar/desbloquear:
+Para solucionarlo es preciso entrar al servidor y seguir estos pasos:
 
 * borra `/var/catastro/results/<id_municipio>`, por ejemplo: `rm -rf /var/catastro/results/03104`
 * `cd /opt/CatAtomAPI`
