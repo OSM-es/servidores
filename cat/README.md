@@ -1,4 +1,6 @@
-**CatAtom2OSM Online**
+# CatAtom2OSM Online
+
+## Despliegue/deployment
 
 Consta de dos servicios independientes:
 
@@ -19,7 +21,7 @@ Para tener permisos de escritura, el usuario debe pertenecer al grupo 'git'.
 Para pasar a producción los cambios en CatAtomWeb, reconstruir y reiniciar el servicio
 
     docker-compose build         
-    docker-compose down
+    docker-compose down --remove-orphans
     docker-compose up -d
 
 En el caso de CatAtomAPI, usar la macro make
@@ -31,3 +33,17 @@ En el caso de CatAtomAPI, usar la macro make
 Para consultar los registros
 
     docker-compose logs -f
+
+## Resolución de problemas
+
+### Projecto crasheado
+
+A veces, un proceso de un municipio puede fallar y no es posible the borrar en el sitio web https://catastro.openstreetmap.es | Process.
+Con estes pasos se puede reparar:
+
+* borra `/var/catastro/results/<chifre_municipio>` por ejemplo: `rm -rf /var/catastro/results/03104`
+* `cd /opt/CatAtomAPI`
+* `make down; make up` o `docker-compose down --remove-orphans; docker-compose up -d`
+
+
+
