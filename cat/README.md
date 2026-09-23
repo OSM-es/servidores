@@ -36,12 +36,12 @@ Para consultar los registros
 
 ## Resolución de problemas
 
-### Projecto crasheado
+### Proyecto bloqueado
 
-A veces, un proceso de un municipio puede fallar y no es posible the borrar en el sitio web https://catastro.openstreetmap.es | Process.
-Con estes pasos se puede reparar:
+A veces, el procesamiento de un municipio puede fallar y quedarse en estado de _ejecutando_, sin terminar nunca. No es posible borrarlo o pararlo desde la interfaz web (https://catastro.openstreetmap.es).
+Para poderlo solucionar es precisa entrar al servidor y con estos pasos se puede reparar/desbloquear:
 
-* borra `/var/catastro/results/<chifre_municipio>` por ejemplo: `rm -rf /var/catastro/results/03104`
+* borra `/var/catastro/results/<id_municipio>`, por ejemplo: `rm -rf /var/catastro/results/03104`
 * `cd /opt/CatAtomAPI`
 * `make down; make up` o `docker-compose down --remove-orphans; docker-compose up -d`
 
