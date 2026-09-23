@@ -34,6 +34,14 @@ Para consultar los registros
 
     docker-compose logs -f
 
+Actualizar el código tras actualizar el submódulo
+
+    git submodule update --remote
+    git commit -a -m "update submodule"
+    git push
+
+Una vez subido, volver a rehacer la máquina: `make down && make build && make up`
+
 ## Resolución de problemas
 
 ### Proyecto bloqueado
